@@ -1,4 +1,4 @@
-microservice-template/.gradle
+crime-validation/.gradle
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
