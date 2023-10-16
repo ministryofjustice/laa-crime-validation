@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "laa-crime-validation.fullname" . }}-test-connection"
+  labels:
+    {{- include "laa-crime-validation.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "laa-crime-validation.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
