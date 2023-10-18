@@ -67,7 +67,7 @@ actuator:
     path: /actuator/prometheus
   health:
     path: /actuator/health
-  port: 8299
+  port: 8400
   liveness:
     initialDelaySeconds: 45
     periodSeconds: 10
