@@ -5,18 +5,18 @@ metadata:
   labels:
     {{- include "laa-crime-validation.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
+{{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
+{{- end }}
   selector:
     matchLabels:
       {{- include "laa-crime-validation.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+    {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+    {{- end }}
       labels:
         {{- include "laa-crime-validation.selectorLabels" . | nindent 8 }}
     spec:
@@ -37,25 +37,47 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+            {{- if not (eq (toString .Values.actuator.port) "http") }}
+            - name: actuator
+              containerPort: {{ .Values.actuator.port }}
+              protocol: TCP
+            {{- end }}
           livenessProbe:
             httpGet:
-              path: /
+              path: {{ .Values.actuator.health.path }}
+            {{- if not (eq (toString .Values.actuator.port) "http") }}
+              port: actuator
+            {{- else }}
               port: http
+            {{- end }}
+            initialDelaySeconds: {{ .Values.actuator.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.actuator.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.actuator.liveness.timeoutSeconds }}
+            failureThreshold: {{ .Values.actuator.liveness.failureThreshold }}
           readinessProbe:
             httpGet:
-              path: /
+              path: {{ .Values.actuator.health.path }}
+            {{- if not (eq (toString .Values.actuator.port) "http") }}
+              port: actuator
+            {{- else }}
               port: http
+            {{- end }}
+            initialDelaySeconds: {{ .Values.actuator.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.actuator.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.actuator.readiness.timeoutSeconds }}
+            failureThreshold: {{ .Values.actuator.readiness.failureThreshold }}
+          {{ include "laa-crime-validation.env-vars" . | nindent 10 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+    {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
+    {{- end }}
+    {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+    {{- end }}

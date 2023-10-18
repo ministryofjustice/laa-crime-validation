@@ -10,10 +10,21 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   # tag: latest
 
+sentry:
+  dsn: https://f53c1271fd174468871ee12406179f06@o345774.ingest.sentry.io/4505352950710272
+  sampleRate: 0.05
+
 aws_region: eu-west-2
 
 java:
   host_env: development
+
+jwt:
+  issuerUri:
+
+maatApi:
+  baseUrl: https://maat-cd-api.dev.legalservices.gov.uk
+  oauthUrl: https://maat-cd-api-dev.auth.eu-west-2.amazoncognito.com/oauth2/token
 
 serviceAccount:
   # Specifies whether a service account should be created
