@@ -17,15 +17,9 @@ env:
   - name: MAAT_API_OAUTH_URL
     value: {{ .Values.maatApi.oauthUrl }}
   - name: MAAT_API_OAUTH_CLIENT_ID
-    valueFrom:
-      secretKeyRef:
-        name: maat-api-oauth-client-id
-        key: MAAT_API_OAUTH_CLIENT_ID
+    value: {{ .Values.maatApi.clientId }}
   - name: MAAT_API_OAUTH_CLIENT_SECRET
-    valueFrom:
-      secretKeyRef:
-        name: maat-api-oauth-client-secret
-        key: MAAT_API_OAUTH_CLIENT_SECRET
+    value: {{ .Values.maatApi.clientSecret }}
   - name: JWT_ISSUER_URI
     value: {{ .Values.jwt.issuerUri }}
   - name: DATASOURCE_HOST_PORT
