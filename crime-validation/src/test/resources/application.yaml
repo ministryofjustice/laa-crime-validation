@@ -1,0 +1,13 @@
+server:
+  port: 8390
+
+spring:
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: ${validation.security.issuer-uri}
+
+validation:
+  security:
+    issuer-uri: http://localhost:${server.port}
