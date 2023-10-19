@@ -14,3 +14,12 @@ management:
     web:
       exposure:
         include: health,info,metrics,prometheus
+
+sentry:
+  dsn: ${SENTRY_DSN}
+  environment: ${SENTRY_ENV}
+  release: 0.0.1
+  servername: aws-eks-container
+  send-default-pii: true
+  attach-stacktrace: true
+  sample-rate: ${SENTRY_SAMPLE_RATE}
