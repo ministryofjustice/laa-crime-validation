@@ -15,6 +15,13 @@ management:
       exposure:
         include: health,info,metrics,prometheus
 
+spring:
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI}
+
 sentry:
   dsn: ${SENTRY_DSN}
   environment: ${SENTRY_ENV}
