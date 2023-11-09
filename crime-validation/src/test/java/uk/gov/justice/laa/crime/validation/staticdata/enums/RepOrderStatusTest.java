@@ -22,4 +22,13 @@ class RepOrderStatusTest {
         assertThatThrownBy(() -> RepOrderStatus.getFrom("INVALID_CODE"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void givenAValidRepOrderStatus_validateEnumValues() {
+        assertThat("ERR").isEqualTo(RepOrderStatus.ERR.getCode());
+        assertThat("Created in Error").isEqualTo(RepOrderStatus.ERR.getDescription());
+        assertThat(3).isEqualTo(RepOrderStatus.ERR.getSequence());
+        assertThat(RepOrderStatus.ERR.isRemoveContribs()).isTrue();
+        assertThat(RepOrderStatus.ERR.isUpdateAllowed()).isFalse();
+    }
 }
