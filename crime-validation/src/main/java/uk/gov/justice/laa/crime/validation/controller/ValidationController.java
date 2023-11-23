@@ -36,7 +36,7 @@ public class ValidationController {
             )
     )
     @DefaultHTTPErrorResponse
-    public ResponseEntity<Object> isUserActionValid(
+    public ResponseEntity<Boolean> isUserActionValid(
             @Parameter(description = "Check if User Action is Valid - Role Action, New Work Reason and Reservation",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ApiIsRoleActionValidRequest.class)

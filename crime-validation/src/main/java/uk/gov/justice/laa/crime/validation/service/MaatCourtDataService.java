@@ -23,7 +23,7 @@ public class MaatCourtDataService {
                 new ParameterizedTypeReference<>() {
                 },
                 configuration.getMaatApi().getUserEndpoints().getUserSummaryUrl(),
-                "test-s"
+                username
         );
 
         log.info(String.format(RESPONSE_STRING, userSummaryDTO));
