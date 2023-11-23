@@ -61,7 +61,7 @@ class ValidationControllerTest {
     }
 
     @Test
-    void givenFailedApiCall_whenCreateIsInvoked_thenInternalServerErrorResponseIsReturned() throws Exception {
+    void givenFailedApiCall_whenIsUserActionValidIsInvoked_thenInternalServerErrorResponseIsReturned() throws Exception {
         ApiIsRoleActionValidRequest request = TestModelDataBuilder.getApiIsRoleActionValidRequest();
         when(validationService.isUserActionValid(any()))
                 .thenThrow(new CrimeValidationException(List.of("User does not have a role capable of performing this action")));
