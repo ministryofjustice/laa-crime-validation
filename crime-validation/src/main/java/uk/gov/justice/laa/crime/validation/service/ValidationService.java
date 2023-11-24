@@ -20,11 +20,11 @@ public class ValidationService {
 
     public Boolean isUserActionValid(@NonNull ApiIsRoleActionValidRequest request) {
         List<String> crimeValidationExceptionList = new ArrayList<>();
-        UserSummaryDTO userSummaryDTO = maatCourtDataService.getUserSummary(request.getUsername());
 
         if (request.getAction() == null && request.getNewWorkReason() == null && request.getSessionId() == null) {
             throw new IllegalArgumentException("Action, New work reason and Session does not exist");
         }
+        UserSummaryDTO userSummaryDTO = maatCourtDataService.getUserSummary(request.getUsername());
 
         if (request.getAction() != null && (userSummaryDTO.getRoleActions() == null
                 || !userSummaryDTO.getRoleActions().contains(request.getAction().getCode()))) {
