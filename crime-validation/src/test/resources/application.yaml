@@ -4,9 +4,31 @@ server:
 spring:
   security:
     oauth2:
+      client:
+        provider:
+          maat-api:
+            token-uri: http://localhost:9999/oauth2/token
+        registration:
+          maat-api:
+            client-id: dummy-client
+            client-secret: dummy-secret
+            authorization-grant-type: client_credentials
       resource-server:
         jwt:
           issuer-uri: ${validation.security.issuer-uri}
+
+retry-config:
+  max-retries: 3
+  min-back-off-period: 5
+  jitter-value: 0.75
+
+services:
+  maat-api:
+    oAuthEnabled: true
+    base-url: http://localhost:9999
+    user-domain: ${services.maat-api.base-url}/api/internal/v1/users
+    user-endpoints:
+      user-summary-url: ${services.maat-api.user-domain}/summary/{username}
 
 validation:
   security:
