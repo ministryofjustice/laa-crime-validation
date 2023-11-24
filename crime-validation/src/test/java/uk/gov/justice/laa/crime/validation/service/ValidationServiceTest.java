@@ -155,13 +155,7 @@ class ValidationServiceTest {
 
     @Test
     void givenInvalidInput_whenIsUserActionValidIsInvoked_thenExceptionIsThrown() throws CrimeValidationException {
-        UserSummaryDTO expectedUserSummaryDTO = TestModelDataBuilder.getUserSummaryDTO();
-        when(maatCourtDataService.getUserSummary(any())).thenReturn(expectedUserSummaryDTO);
-
-        ApiIsRoleActionValidRequest apiIsRoleActionValidRequest = TestModelDataBuilder.getApiIsRoleActionValidRequestWithReservation();
-        apiIsRoleActionValidRequest.setNewWorkReason(null);
-        apiIsRoleActionValidRequest.setAction(null);
-        apiIsRoleActionValidRequest.setSessionId(null);
+        ApiIsRoleActionValidRequest apiIsRoleActionValidRequest = TestModelDataBuilder.getApiIsRoleActionInvalidValidRequest();
 
         assertThatThrownBy(() -> validationService.isUserActionValid(apiIsRoleActionValidRequest))
                 .isInstanceOf(IllegalArgumentException.class)

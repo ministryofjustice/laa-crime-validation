@@ -59,4 +59,13 @@ public class TestModelDataBuilder {
                 .withNewWorkReason(TEST_NEW_WORK_REASON)
                 .withSessionId(TEST_USER_SESSION);
     }
+
+    public static ApiIsRoleActionValidRequest getApiIsRoleActionInvalidValidRequest() {
+        return new ApiIsRoleActionValidRequest()
+                .withUsername(TEST_USER_NAME)
+                .withAction(null)
+                .withNewWorkReason(null)
+                .withSessionId(null);
+    }
+
 }

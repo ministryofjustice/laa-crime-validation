@@ -100,10 +100,7 @@ class ValidationIntegrationTest {
 
     @Test
     void givenInvalidRequest_whenCreateHardshipIsInvoked_thenFailsWithBadRequest() throws Exception {
-        ApiIsRoleActionValidRequest request = TestModelDataBuilder.getApiIsRoleActionValidRequest();
-        request.setAction(null);
-        request.setNewWorkReason(null);
-        request.setSessionId(null);
+        ApiIsRoleActionValidRequest request = TestModelDataBuilder.getApiIsRoleActionInvalidValidRequest();
         String requestBody = objectMapper.writeValueAsString(request);
 
         mvc.perform(buildRequestGivenContent(HttpMethod.POST, requestBody, ENDPOINT_URL_IS_USER_ACTION_VALID))
