@@ -197,4 +197,43 @@ class ValidationServiceTest {
                 validationService.isUserActionValid(TestModelDataBuilder.getApiIsRoleActionValidRequest());
         assertTrue(isUserActionValid);
     }
+
+    @Test
+    void givenValidInputWithOnlyRoleAction_whenIsUserActionValidIsInvoked_thenOKResponseIsReturned() throws CrimeValidationException {
+        ApiIsRoleActionValidRequest apiIsRoleActionValidRequest = TestModelDataBuilder.getApiIsRoleActionValidRequest();
+        apiIsRoleActionValidRequest.setNewWorkReason(null);
+        apiIsRoleActionValidRequest.setSessionId(null);
+        UserSummaryDTO userSummaryDTO = TestModelDataBuilder.getUserSummaryDTO();
+        when(maatCourtDataService.getUserSummary(any())).thenReturn(userSummaryDTO);
+        Boolean isUserActionValid =
+                validationService.isUserActionValid(apiIsRoleActionValidRequest);
+        assertTrue(isUserActionValid);
+    }
+
+    @Test
+    void givenValidInputWithOnlyNewWorkReason_whenIsUserActionValidIsInvoked_thenOKResponseIsReturned() throws CrimeValidationException {
+        ApiIsRoleActionValidRequest apiIsRoleActionValidRequest = TestModelDataBuilder.getApiIsRoleActionValidRequest();
+        apiIsRoleActionValidRequest.setAction(null);
+        apiIsRoleActionValidRequest.setSessionId(null);
+        UserSummaryDTO userSummaryDTO = TestModelDataBuilder.getUserSummaryDTO();
+        when(maatCourtDataService.getUserSummary(any())).thenReturn(userSummaryDTO);
+        Boolean isUserActionValid =
+                validationService.isUserActionValid(apiIsRoleActionValidRequest);
+        assertTrue(isUserActionValid);
+    }
+
+    @Test
+    void givenValidInputWithOnlySessionId_whenIsUserActionValidIsInvoked_thenOKResponseIsReturned() throws CrimeValidationException {
+        ApiIsRoleActionValidRequest apiIsRoleActionValidRequest = TestModelDataBuilder.getApiIsRoleActionValidRequestWithReservation();
+        apiIsRoleActionValidRequest.setAction(null);
+        apiIsRoleActionValidRequest.setNewWorkReason(null);
+
+        UserSummaryDTO userSummaryDTO = TestModelDataBuilder.getUserSummaryDTO();
+        userSummaryDTO.getReservationsEntity().setUserSession("sessionId_1234");
+        when(maatCourtDataService.getUserSummary(any())).thenReturn(userSummaryDTO);
+        
+        Boolean isUserActionValid =
+                validationService.isUserActionValid(apiIsRoleActionValidRequest);
+        assertTrue(isUserActionValid);
+    }
 }
