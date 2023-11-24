@@ -231,7 +231,22 @@ class ValidationServiceTest {
         UserSummaryDTO userSummaryDTO = TestModelDataBuilder.getUserSummaryDTO();
         userSummaryDTO.getReservationsEntity().setUserSession("sessionId_1234");
         when(maatCourtDataService.getUserSummary(any())).thenReturn(userSummaryDTO);
-        
+
+        Boolean isUserActionValid =
+                validationService.isUserActionValid(apiIsRoleActionValidRequest);
+        assertTrue(isUserActionValid);
+    }
+
+    @Test
+    void givenValidInputWithNoReservation_whenIsUserActionValidIsInvoked_thenOKResponseIsReturned() throws CrimeValidationException {
+        ApiIsRoleActionValidRequest apiIsRoleActionValidRequest = TestModelDataBuilder.getApiIsRoleActionValidRequestWithReservation();
+        apiIsRoleActionValidRequest.setAction(null);
+        apiIsRoleActionValidRequest.setNewWorkReason(null);
+
+        UserSummaryDTO userSummaryDTO = TestModelDataBuilder.getUserSummaryDTO();
+        userSummaryDTO.setReservationsEntity(null);
+        when(maatCourtDataService.getUserSummary(any())).thenReturn(userSummaryDTO);
+
         Boolean isUserActionValid =
                 validationService.isUserActionValid(apiIsRoleActionValidRequest);
         assertTrue(isUserActionValid);
