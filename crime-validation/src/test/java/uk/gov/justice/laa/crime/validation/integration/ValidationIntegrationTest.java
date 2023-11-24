@@ -94,7 +94,7 @@ class ValidationIntegrationTest {
         mvc.perform(buildRequestGivenContent(HttpMethod.POST, requestBody, ENDPOINT_URL_IS_USER_ACTION_VALID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(true));
-        verify(exactly(1), postRequestedFor(urlEqualTo("/api/internal/v1/users/summary/" + TestModelDataBuilder.TEST_USER_NAME)));
+        verify(exactly(1), getRequestedFor(urlEqualTo("/api/internal/v1/users/summary/" + TestModelDataBuilder.TEST_USER_NAME)));
     }
 
 
