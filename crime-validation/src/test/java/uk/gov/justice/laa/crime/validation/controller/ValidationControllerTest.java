@@ -29,6 +29,7 @@ import static uk.gov.justice.laa.crime.validation.util.RequestBuilderUtils.build
 class ValidationControllerTest {
 
     private static final String ENDPOINT_URL_IS_USER_ACTION_VALID = "/api/internal/v1/validation/is-user-action-valid";
+    public static final String NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION = "User does not have a role capable of performing this action";
 
     @Autowired
     private MockMvc mvc;
@@ -64,7 +65,7 @@ class ValidationControllerTest {
     void givenFailedApiCall_whenIsUserActionValidIsInvoked_thenInternalServerErrorResponseIsReturned() throws Exception {
         ApiIsRoleActionValidRequest request = TestModelDataBuilder.getApiIsRoleActionValidRequest();
         when(validationService.isUserActionValid(any()))
-                .thenThrow(new CrimeValidationException(List.of("User does not have a role capable of performing this action")));
+                .thenThrow(new CrimeValidationException(List.of(NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION)));
         String requestBody = objectMapper.writeValueAsString(request);
         mvc.perform(buildRequestGivenContent(HttpMethod.POST, requestBody, ENDPOINT_URL_IS_USER_ACTION_VALID))
                 .andExpect(status().isInternalServerError());

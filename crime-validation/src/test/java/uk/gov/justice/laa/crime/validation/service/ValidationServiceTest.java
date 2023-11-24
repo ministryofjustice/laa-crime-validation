@@ -25,6 +25,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SoftAssertionsExtension.class)
 class ValidationServiceTest {
 
+    public static final String EXISTING_RESERVATION_SO_RESERVATION_NOT_ALLOWED = "User have an existing reservation, so reservation not allowed";
+    public static final String NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION = "User does not have a role capable of performing this action";
+    public static final String DOES_NOT_HAVE_A_VALID_NEW_WORK_REASON_CODE = "User does not have a valid New Work Reason Code";
+    public static final String ACTION_NEW_WORK_REASON_AND_SESSION_DOES_NOT_EXIST = "Action, New work reason and Session does not exist";
     @InjectMocks
     private ValidationService validationService;
 
@@ -48,7 +52,7 @@ class ValidationServiceTest {
         assertThatThrownBy(() -> validationService.isUserActionValid(TestModelDataBuilder.getApiIsRoleActionValidRequestWithReservation()))
                 .isInstanceOf(CrimeValidationException.class)
                 .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
-                .contains("User have an existing reservation, so reservation not allowed");
+                .contains(EXISTING_RESERVATION_SO_RESERVATION_NOT_ALLOWED);
     }
 
     @Test
@@ -60,7 +64,7 @@ class ValidationServiceTest {
         assertThatThrownBy(() -> validationService.isUserActionValid(apiIsRoleActionValidRequest))
                 .isInstanceOf(CrimeValidationException.class)
                 .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
-                .contains("User does not have a role capable of performing this action");
+                .contains(NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION);
 
     }
 
@@ -73,7 +77,7 @@ class ValidationServiceTest {
         assertThatThrownBy(() -> validationService.isUserActionValid(apiIsRoleActionValidRequest))
                 .isInstanceOf(CrimeValidationException.class)
                 .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
-                .contains("User does not have a valid New Work Reason Code");
+                .contains(DOES_NOT_HAVE_A_VALID_NEW_WORK_REASON_CODE);
     }
 
     @Test
@@ -99,10 +103,9 @@ class ValidationServiceTest {
         assertThatThrownBy(() -> validationService.isUserActionValid(apiIsRoleActionValidRequest))
         .isInstanceOf(CrimeValidationException.class)
         .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
-        .contains("User does not have a valid New Work Reason Code",
-                "User does not have a role capable of performing this action",
-                "User have an existing reservation, so reservation not allowed"
-        );
+        .contains(DOES_NOT_HAVE_A_VALID_NEW_WORK_REASON_CODE,
+                NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION,
+                EXISTING_RESERVATION_SO_RESERVATION_NOT_ALLOWED);
     }
 
     @Test
@@ -118,9 +121,8 @@ class ValidationServiceTest {
         assertThatThrownBy(() -> validationService.isUserActionValid(apiIsRoleActionValidRequest))
                 .isInstanceOf(CrimeValidationException.class)
                 .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
-                .contains("User does not have a valid New Work Reason Code",
-                        "User does not have a role capable of performing this action"
-                );
+                .contains(DOES_NOT_HAVE_A_VALID_NEW_WORK_REASON_CODE,
+                        NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION);
     }
 
     @Test
@@ -134,8 +136,8 @@ class ValidationServiceTest {
         assertThatThrownBy(() -> validationService.isUserActionValid(apiIsRoleActionValidRequest))
                 .isInstanceOf(CrimeValidationException.class)
                 .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
-                .contains("User does not have a role capable of performing this action",
-                        "User have an existing reservation, so reservation not allowed");
+                .contains(NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION,
+                        EXISTING_RESERVATION_SO_RESERVATION_NOT_ALLOWED);
     }
 
     @Test
@@ -149,8 +151,8 @@ class ValidationServiceTest {
         assertThatThrownBy(() -> validationService.isUserActionValid(apiIsRoleActionValidRequest))
                 .isInstanceOf(CrimeValidationException.class)
                 .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
-                .contains("User does not have a valid New Work Reason Code",
-                        "User have an existing reservation, so reservation not allowed");
+                .contains(DOES_NOT_HAVE_A_VALID_NEW_WORK_REASON_CODE,
+                        EXISTING_RESERVATION_SO_RESERVATION_NOT_ALLOWED);
     }
 
     @Test
@@ -159,6 +161,40 @@ class ValidationServiceTest {
 
         assertThatThrownBy(() -> validationService.isUserActionValid(apiIsRoleActionValidRequest))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Action, New work reason and Session does not exist");
+                .hasMessage(ACTION_NEW_WORK_REASON_AND_SESSION_DOES_NOT_EXIST);
+    }
+
+    @Test
+    void givenValidInputAndWithNoRoleActionsForUser_whenIsUserActionValidIsInvoked_thenExceptionIsThrown() throws CrimeValidationException {
+        UserSummaryDTO userSummaryDTO = TestModelDataBuilder.getUserSummaryDTO();
+        userSummaryDTO.setRoleActions(null);
+        when(maatCourtDataService.getUserSummary(any())).thenReturn(userSummaryDTO);
+
+        assertThatThrownBy(() -> validationService.isUserActionValid(TestModelDataBuilder.getApiIsRoleActionValidRequest()))
+                .isInstanceOf(CrimeValidationException.class)
+                .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
+                .contains(NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION);
+    }
+
+    @Test
+    void givenValidInputAndWithNewWorkReasonForUser_whenIsUserActionValidIsInvoked_thenExceptionIsThrown() throws CrimeValidationException {
+        UserSummaryDTO userSummaryDTO = TestModelDataBuilder.getUserSummaryDTO();
+        userSummaryDTO.setNewWorkReasons(null);
+        when(maatCourtDataService.getUserSummary(any())).thenReturn(userSummaryDTO);
+
+        assertThatThrownBy(() -> validationService.isUserActionValid(TestModelDataBuilder.getApiIsRoleActionValidRequest()))
+                .isInstanceOf(CrimeValidationException.class)
+                .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
+                .contains(DOES_NOT_HAVE_A_VALID_NEW_WORK_REASON_CODE);
+    }
+
+    @Test
+    void givenValidInputAndWithDifferentSessionIdForUser_whenIsUserActionValidIsInvoked_thenOKResponseIsReturned() throws CrimeValidationException {
+        UserSummaryDTO userSummaryDTO = TestModelDataBuilder.getUserSummaryDTO();
+        userSummaryDTO.getReservationsEntity().setUserSession("sessionId_1234");
+        when(maatCourtDataService.getUserSummary(any())).thenReturn(userSummaryDTO);
+        Boolean isUserActionValid =
+                validationService.isUserActionValid(TestModelDataBuilder.getApiIsRoleActionValidRequest());
+        assertTrue(isUserActionValid);
     }
 }

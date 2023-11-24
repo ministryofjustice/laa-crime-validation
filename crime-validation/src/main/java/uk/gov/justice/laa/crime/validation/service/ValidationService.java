@@ -18,7 +18,7 @@ public class ValidationService {
 
     private final MaatCourtDataService maatCourtDataService;
 
-    public Boolean isUserActionValid(@NonNull ApiIsRoleActionValidRequest request) {
+    public Boolean isUserActionValid(ApiIsRoleActionValidRequest request) {
         List<String> crimeValidationExceptionList = new ArrayList<>();
 
         if (request.getAction() == null && request.getNewWorkReason() == null && request.getSessionId() == null) {

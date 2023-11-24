@@ -24,7 +24,7 @@ public class CrimeValidationExceptionHandler {
         return new ResponseEntity<>(ErrorDTO.builder().code(status.toString()).messageList(errorMessage).build(), status);
     }
 
-    private static ResponseEntity<ErrorDTO> buildErrorResponseString(HttpStatus status, String message, String traceId) {
+    private static ResponseEntity<ErrorDTO> buildErrorResponseWithMessage(HttpStatus status, String message, String traceId) {
         return new ResponseEntity<>(ErrorDTO.builder().traceId(traceId).code(status.toString()).message(message).build(), status);
     }
     @ExceptionHandler(CrimeValidationException.class)
@@ -36,7 +36,7 @@ public class CrimeValidationExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
         log.error("CrimeValidationException: ", ex);
-        return buildErrorResponseString(HttpStatus.BAD_REQUEST, ex.getMessage(), traceIdHandler.getTraceId());
+        return buildErrorResponseWithMessage(HttpStatus.BAD_REQUEST, ex.getMessage(), traceIdHandler.getTraceId());
     }
 
 }
