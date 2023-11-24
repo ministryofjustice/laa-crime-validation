@@ -1,7 +1,6 @@
 server:
   port: 8390
 
-
 spring:
   security:
     oauth2:
@@ -30,7 +29,6 @@ services:
     user-domain: ${services.maat-api.base-url}/api/internal/v1/users
     user-endpoints:
       user-summary-url: ${services.maat-api.user-domain}/summary/{username}
-
 
 validation:
   security:

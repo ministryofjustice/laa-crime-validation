@@ -43,7 +43,6 @@ services:
     user-endpoints:
       user-summary-url: ${services.maat-api.user-domain}/summary/{username}
 
-
 sentry:
   dsn: ${SENTRY_DSN}
   environment: ${SENTRY_ENV}
