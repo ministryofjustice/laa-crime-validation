@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uk.gov.justice.laa.crime.validation.annotation.DefaultHTTPErrorResponse;
+import uk.gov.justice.laa.crime.annotation.DefaultHTTPErrorResponse;
 import uk.gov.justice.laa.crime.validation.model.maat_api.ApiIsRoleActionValidRequest;
 import uk.gov.justice.laa.crime.validation.service.ValidationService;
 

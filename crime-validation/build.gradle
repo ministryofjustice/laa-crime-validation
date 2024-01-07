@@ -22,7 +22,7 @@ def versions = [
 		springdocVersion        : "2.2.0",
 		okhttpVersion           : "4.12.0",
 		wiremockVersion    		: "2.35.0",
-		crimeCommonsVersion		: "2.12.0",
+		crimeCommonsVersion		: "2.13.0",
 		springCloudStubRunnerVersion       : "4.0.4"
 ]
 
@@ -58,6 +58,7 @@ dependencies {
 	implementation "org.liquibase:liquibase-core"
 
 	implementation "uk.gov.justice.service.laa-crime:crime-commons-spring-boot-starter-rest-client:$versions.crimeCommonsVersion"
+	implementation "uk.gov.justice.service.laa-crime:crime-commons-classes:$versions.crimeCommonsVersion"
 
 	compileOnly "org.projectlombok:lombok"
 	annotationProcessor "org.projectlombok:lombok"

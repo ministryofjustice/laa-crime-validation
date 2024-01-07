@@ -7,16 +7,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import uk.gov.justice.laa.crime.enums.NewWorkReason;
 import uk.gov.justice.laa.crime.validation.builder.TestModelDataBuilder;
 import uk.gov.justice.laa.crime.validation.dto.UserSummaryDTO;
 import uk.gov.justice.laa.crime.validation.exception.CrimeValidationException;
 import uk.gov.justice.laa.crime.validation.model.maat_api.ApiIsRoleActionValidRequest;
 import uk.gov.justice.laa.crime.validation.staticdata.enums.Action;
-import uk.gov.justice.laa.crime.validation.staticdata.enums.NewWorkReason;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForClassTypes.catchThrowableOfType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -101,11 +99,11 @@ class ValidationServiceTest {
         apiIsRoleActionValidRequest.setNewWorkReason(NewWorkReason.NEW);
 
         assertThatThrownBy(() -> validationService.isUserActionValid(apiIsRoleActionValidRequest))
-        .isInstanceOf(CrimeValidationException.class)
-        .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
-        .contains(DOES_NOT_HAVE_A_VALID_NEW_WORK_REASON_CODE,
-                NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION,
-                EXISTING_RESERVATION_SO_RESERVATION_NOT_ALLOWED);
+                .isInstanceOf(CrimeValidationException.class)
+                .extracting("exceptionMessage", InstanceOfAssertFactories.ITERABLE)
+                .contains(DOES_NOT_HAVE_A_VALID_NEW_WORK_REASON_CODE,
+                        NOT_HAVE_A_ROLE_CAPABLE_OF_PERFORMING_THIS_ACTION,
+                        EXISTING_RESERVATION_SO_RESERVATION_NOT_ALLOWED);
     }
 
     @Test

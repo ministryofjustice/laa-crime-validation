@@ -17,7 +17,7 @@
     "newWorkReason": {
       "type": "object",
       "description": "The New Work Reason Code",
-      "existingJavaType": "uk.gov.justice.laa.crime.validation.staticdata.enums.NewWorkReason"
+      "existingJavaType": "uk.gov.justice.laa.crime.enums.NewWorkReason"
     },
     "sessionId": {
       "type": "string",
