@@ -1,13 +1,12 @@
 package uk.gov.justice.laa.crime.validation.builder;
 
 import org.springframework.stereotype.Component;
+import uk.gov.justice.laa.crime.enums.NewWorkReason;
 import uk.gov.justice.laa.crime.validation.dto.ReservationsDTO;
 import uk.gov.justice.laa.crime.validation.dto.UserSummaryDTO;
 import uk.gov.justice.laa.crime.validation.model.maat_api.ApiIsRoleActionValidRequest;
 import uk.gov.justice.laa.crime.validation.staticdata.enums.Action;
-import uk.gov.justice.laa.crime.validation.staticdata.enums.NewWorkReason;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

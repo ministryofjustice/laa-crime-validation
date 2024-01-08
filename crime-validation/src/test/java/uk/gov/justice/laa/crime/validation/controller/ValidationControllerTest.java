@@ -21,7 +21,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static uk.gov.justice.laa.crime.validation.util.RequestBuilderUtils.buildRequestGivenContent;
+import static uk.gov.justice.laa.crime.util.RequestBuilderUtils.buildRequestGivenContent;
 
 @WebMvcTest(ValidationController.class)
 @Import(CrimeValidationTestConfiguration.class)
