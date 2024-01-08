@@ -23,7 +23,7 @@ def versions = [
 		okhttpVersion           : "4.12.0",
 		wiremockVersion    		: "2.35.0",
 		crimeCommonsVersion		: "2.13.1",
-		springCloudStubRunnerVersion       : "4.0.4"
+		springCloudStubRunnerVersion       : "4.1.0"
 ]
 
 configurations {
