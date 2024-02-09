@@ -22,14 +22,6 @@ retry-config:
   min-back-off-period: 5
   jitter-value: 0.75
 
-services:
-  maat-api:
-    oAuthEnabled: true
-    base-url: http://localhost:9999
-    user-domain: ${services.maat-api.base-url}/api/internal/v1/users
-    user-endpoints:
-      user-summary-url: ${services.maat-api.user-domain}/summary/{username}
-
 validation:
   security:
     issuer-uri: http://localhost:${server.port}

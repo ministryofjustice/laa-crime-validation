@@ -36,13 +36,6 @@ retry-config:
   min-back-off-period: 5
   jitter-value: 0.75
 
-services:
-  maat-api:
-    base-url: ${MAAT_API_BASE_URL}
-    user-domain: ${services.maat-api.base-url}/api/internal/v1/users
-    user-endpoints:
-      user-summary-url: ${services.maat-api.user-domain}/summary/{username}
-
 sentry:
   dsn: ${SENTRY_DSN}
   environment: ${SENTRY_ENV}
